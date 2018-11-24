@@ -21,6 +21,19 @@ const GET_ORGANIZATION = `
 }
 `;
 
+const GET_REPOSITORY_OF_ORGANIZATION = `
+{
+  organization(login: "the-road-to-learn-react") {
+    name 
+    url
+    repository(name: "the-road-to-learn-react") {
+      name
+      url
+    }
+  }
+}
+`;
+
 class App extends Component {
   state = {
     path: 'the-road-to-learn-react/the-road-to-learn-react',
@@ -44,7 +57,7 @@ class App extends Component {
 
   onFetchFromGithub = () => {
     axiosGithubGraphQL
-      .post('', { query: GET_ORGANIZATION })
+      .post('', { query: GET_REPOSITORY_OF_ORGANIZATION })
       .then(result =>
         this.setState(() => ({
           organization: result.data.data.organization,
@@ -101,6 +114,18 @@ const Organization = ({ organization, errors }) => {
       <p>
         <strong>Issues from Organization:</strong>
         <a href={organization.url}>{organization.name}</a>
+      </p>
+      <Repository repository={organization.repository} />
+    </div>
+  );
+};
+
+const Repository = ({ repository }) => {
+  return (
+    <div>
+      <p>
+        <strong>In Repository:</strong>
+        <a href={repository.url}>{repository.name}</a>
       </p>
     </div>
   );
