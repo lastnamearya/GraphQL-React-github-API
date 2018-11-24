@@ -12,13 +12,22 @@ const axiosGithubGraphQL = axios.create({
   },
 });
 
+const GET_ORGANIZATION = `
+{
+  organization(login: "the-road-to-learn-react") {
+    name
+    url
+  }
+}
+`;
+
 class App extends Component {
   state = {
     path: 'the-road-to-learn-react/the-road-to-learn-react',
   };
 
   componentDidMount() {
-    // fetch data
+    this.onFetchFromGithub();
   }
 
   onChange = event => {
@@ -29,6 +38,12 @@ class App extends Component {
     // fetch data
 
     event.preventDefault();
+  };
+
+  onFetchFromGithub = () => {
+    axiosGithubGraphQL
+      .post('', { query: GET_ORGANIZATION })
+      .then(result => console.log(result));
   };
 
   render() {
