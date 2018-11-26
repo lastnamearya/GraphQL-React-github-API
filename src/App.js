@@ -39,6 +39,8 @@ class App extends Component {
           />
           <button type="submit">Search</button>
         </form>
+
+        <hr />
       </div>
     );
   }
